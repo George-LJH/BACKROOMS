@@ -6,7 +6,7 @@
         "arcade-character-animations": "github:microsoft/arcade-character-animations#v0.0.2",
         "animation": "*",
         "pxt-raycasting": "github:aqeeaqee/pxt-raycasting#v0.3.18",
-        "color-coded-tilemap": "*"
+        "arcade-tilemap-a-star": "github:jwunderl/arcade-tilemap-a-star#v0.4.0"
     },
     "files": [
         "main.blocks",
