@@ -31,11 +31,14 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . 6 6 8 8 8 8 6 6 . . . . 
         . . . . . . 6 6 6 6 . . . . . . 
         . . . . . . . . . . . . . . . . 
-        `, null, 50, 50)
+        `, Render.getRenderSpriteInstance(), 50, 50)
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
     game.setGameOverMessage(false, "HE GOT YOU!")
     game.gameOver(false)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile5`, function (sprite, location) {
+    tiles.placeOnTile(_2, tiles.getTileLocation(16, 38))
 })
 let projectile: Sprite = null
 let _4pth: tiles.Location[] = []
@@ -45,9 +48,9 @@ let _4: Sprite = null
 let _3: Sprite = null
 let _2: Sprite = null
 let mySprite: Sprite = null
+let VIEW = 0
 scene.setBackgroundColor(1)
 Render.setViewMode(ViewMode.raycastingView)
-let VIEW = 0
 mySprite = sprites.create(img`
     . . 5 5 5 5 5 5 . . 
     . . 5 f f f f 5 . . 
@@ -71,8 +74,11 @@ let list = [270, 90]
 let GHOST_SPEED = 30
 tiles.setCurrentTilemap(tilemap`level2`)
 tiles.placeOnTile(mySprite, tiles.getTileLocation(1, 49))
+tiles.placeOnTile(Render.getRenderSpriteInstance(), tiles.getTileLocation(1, 49))
+mySprite.follow(Render.getRenderSpriteInstance())
 Render.setViewAngleInDegree(270)
 game.splash("THE BACKROOM. ESCAPE IF YOU CAN... IF THERE IS A EXIT AT ALL...")
+info.startCountup(false)
 _2 = sprites.create(img`
     f f f f f f f f f f f f f f f f 
     f f f f f f f f f f f f f f f f 
@@ -139,6 +145,7 @@ scene.followPath(_3, _3pth, 20)
 scene.followPath(_4, _4pth, 20)
 _3.setFlag(SpriteFlag.GhostThroughWalls, true)
 _4.setFlag(SpriteFlag.GhostThroughWalls, true)
+game.setGameOverScoringType(game.ScoringType.LowScore)
 game.onUpdate(function () {
 	
 })
@@ -276,7 +283,7 @@ forever(function () {
     mySprite.startEffect(effects.fire)
 })
 forever(function () {
-	
+    info.setScore(info.getTimeElapsed())
 })
 forever(function () {
     if (_2.tilemapLocation() == mySprite.tilemapLocation()) {
