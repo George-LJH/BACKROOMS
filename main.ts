@@ -2,9 +2,9 @@ scene.onPathCompletion(SpriteKind.Enemy, function (sprite, location) {
     _2pth = scene.aStar(_2.tilemapLocation(), mySprite.tilemapLocation())
     _3pth = scene.aStar(_3.tilemapLocation(), mySprite.tilemapLocation())
     _4pth = scene.aStar(_4.tilemapLocation(), mySprite.tilemapLocation())
-    scene.followPath(_2, _2pth, 20)
-    scene.followPath(_3, _3pth, 20)
-    scene.followPath(_4, _4pth, 20)
+    scene.followPath(_2, _2pth, 30)
+    scene.followPath(_3, _3pth, 30)
+    scene.followPath(_4, _4pth, 30)
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 	
@@ -14,24 +14,12 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, lo
     game.gameOver(true)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    projectile = sprites.createProjectileFromSprite(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . 6 6 6 6 . . . . . . 
-        . . . . 6 6 6 5 5 6 6 6 . . . . 
-        . . . 7 7 7 7 6 6 6 6 6 6 . . . 
-        . . 6 7 7 7 7 8 8 8 1 1 6 6 . . 
-        . . 7 7 7 7 7 8 8 8 1 1 5 6 . . 
-        . 6 7 7 7 7 8 8 8 8 8 5 5 6 6 . 
-        . 6 7 7 7 8 8 8 6 6 6 6 5 6 6 . 
-        . 6 6 7 7 8 8 6 6 6 6 6 6 6 6 . 
-        . 6 8 7 7 8 8 6 6 6 6 6 6 6 6 . 
-        . . 6 8 7 7 8 6 6 6 6 6 8 6 . . 
-        . . 6 8 8 7 8 8 6 6 6 8 6 6 . . 
-        . . . 6 8 8 8 8 8 8 8 8 6 . . . 
-        . . . . 6 6 8 8 8 8 6 6 . . . . 
-        . . . . . . 6 6 6 6 . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, Render.getRenderSpriteInstance(), 50, 50)
+	
+})
+scene.onPathCompletion(SpriteKind.Food, function (sprite, location) {
+    scene.followPath(_2, _2pth, 30)
+    scene.followPath(_3, _3pth, 30)
+    scene.followPath(_4, _4pth, 30)
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
     game.setGameOverMessage(false, "HE GOT YOU!")
@@ -40,7 +28,6 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSp
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile5`, function (sprite, location) {
     tiles.placeOnTile(_2, tiles.getTileLocation(16, 38))
 })
-let projectile: Sprite = null
 let _4pth: tiles.Location[] = []
 let _3pth: tiles.Location[] = []
 let _2pth: tiles.Location[] = []
@@ -73,6 +60,7 @@ mySprite = Render.getRenderSpriteVariable()
 let list = [270, 90]
 let GHOST_SPEED = 30
 tiles.setCurrentTilemap(tilemap`level2`)
+Render.moveWithController(2, 3, 0)
 tiles.placeOnTile(mySprite, tiles.getTileLocation(1, 49))
 tiles.placeOnTile(Render.getRenderSpriteInstance(), tiles.getTileLocation(1, 49))
 mySprite.follow(Render.getRenderSpriteInstance())
@@ -140,14 +128,20 @@ tiles.placeOnTile(_4, tiles.getTileLocation(56, 39))
 _2pth = scene.aStar(_2.tilemapLocation(), mySprite.tilemapLocation())
 _3pth = scene.aStar(_3.tilemapLocation(), mySprite.tilemapLocation())
 _4pth = scene.aStar(_4.tilemapLocation(), mySprite.tilemapLocation())
-scene.followPath(_2, _2pth, 20)
-scene.followPath(_3, _3pth, 20)
-scene.followPath(_4, _4pth, 20)
+scene.followPath(_2, _2pth, 30)
+scene.followPath(_3, _3pth, 30)
+scene.followPath(_4, _4pth, 30)
 _3.setFlag(SpriteFlag.GhostThroughWalls, true)
 _4.setFlag(SpriteFlag.GhostThroughWalls, true)
 game.setGameOverScoringType(game.ScoringType.LowScore)
 game.onUpdate(function () {
 	
+})
+forever(function () {
+	
+})
+forever(function () {
+    mySprite.startEffect(effects.fire)
 })
 forever(function () {
     scene.setBackgroundImage(assets.image`myImage`)
@@ -277,13 +271,10 @@ forever(function () {
     pause(0.000000001)
 })
 forever(function () {
-    Render.jump(mySprite, 5)
-})
-forever(function () {
-    mySprite.startEffect(effects.fire)
-})
-forever(function () {
     info.setScore(info.getTimeElapsed())
+})
+forever(function () {
+	
 })
 forever(function () {
     if (_2.tilemapLocation() == mySprite.tilemapLocation()) {
