@@ -1,3 +1,6 @@
+namespace SpriteKind {
+    export const Text = SpriteKind.create()
+}
 scene.onPathCompletion(SpriteKind.Enemy, function (sprite, location) {
     _2pth = scene.aStar(_2.tilemapLocation(), mySprite.tilemapLocation())
     _3pth = scene.aStar(_3.tilemapLocation(), mySprite.tilemapLocation())
@@ -65,7 +68,7 @@ tiles.placeOnTile(mySprite, tiles.getTileLocation(1, 49))
 tiles.placeOnTile(Render.getRenderSpriteInstance(), tiles.getTileLocation(1, 49))
 mySprite.follow(Render.getRenderSpriteInstance())
 Render.setViewAngleInDegree(270)
-game.splash("THE BACKROOM. ESCAPE IF YOU CAN... IF THERE IS A EXIT AT ALL...")
+game.splash("THE BACKROOM")
 info.startCountup(false)
 _2 = sprites.create(img`
     f f f f f f f f f f f f f f f f 
