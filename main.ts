@@ -1,6 +1,11 @@
 namespace SpriteKind {
     export const Text = SpriteKind.create()
 }
+scene.onPathCompletion(SpriteKind.Food, function (sprite3, location3) {
+    scene.followPath(_2, _2pth, 30)
+    scene.followPath(_3, _3pth, 30)
+    scene.followPath(_4, _4pth, 30)
+})
 scene.onPathCompletion(SpriteKind.Enemy, function (sprite, location) {
     _2pth = scene.aStar(_2.tilemapLocation(), mySprite.tilemapLocation())
     _3pth = scene.aStar(_3.tilemapLocation(), mySprite.tilemapLocation())
@@ -12,24 +17,19 @@ scene.onPathCompletion(SpriteKind.Enemy, function (sprite, location) {
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 	
 })
-scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
-    game.setGameOverMessage(true, "YOU ESCAPED THE BACKROOM!")
-    game.gameOver(true)
-})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 	
 })
-scene.onPathCompletion(SpriteKind.Food, function (sprite, location) {
-    scene.followPath(_2, _2pth, 30)
-    scene.followPath(_3, _3pth, 30)
-    scene.followPath(_4, _4pth, 30)
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile5`, function (sprite5, location4) {
+    tiles.placeOnTile(_2, tiles.getTileLocation(16, 38))
 })
-sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite2, location2) {
+    game.setGameOverMessage(true, "YOU ESCAPED THE BACKROOM!")
+    game.gameOver(true)
+})
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite4, otherSprite) {
     game.setGameOverMessage(false, "HE GOT YOU!")
     game.gameOver(false)
-})
-scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile5`, function (sprite, location) {
-    tiles.placeOnTile(_2, tiles.getTileLocation(16, 38))
 })
 let _4pth: tiles.Location[] = []
 let _3pth: tiles.Location[] = []
@@ -60,7 +60,7 @@ mySprite = sprites.create(img`
     . . 5 5 . . 5 5 . . 
     `, SpriteKind.Player)
 mySprite = Render.getRenderSpriteVariable()
-let list = [270, 90]
+let list2 = [270, 90]
 let GHOST_SPEED = 30
 tiles.setCurrentTilemap(tilemap`level2`)
 Render.moveWithController(2, 3, 0)
@@ -128,6 +128,60 @@ _4 = sprites.create(img`
     f f . f f . . f f . f f 
     `, SpriteKind.Enemy)
 tiles.placeOnTile(_4, tiles.getTileLocation(56, 39))
+let _5 = sprites.create(img`
+    . . . . f f f f . . . . 
+    . . . f f f f f f . . . 
+    . . . f f f f f f . . . 
+    . . f f 1 f f 1 f f . . 
+    . . f f f f f f f f . . 
+    . f f f f 1 1 f f f f . 
+    f f f f f 1 2 f f f f f 
+    f f f f f 2 2 f f f f f 
+    f f f f f 2 1 f f f f f 
+    f f c f f 1 1 f f c f f 
+    f f . f f f f f f . f f 
+    f f . f f f f f f . f f 
+    f f . f f c c f f . f f 
+    f f . f f . . f f . f f 
+    f f . f f . . f f . f f 
+    `, SpriteKind.Enemy)
+tiles.placeOnTile(_5, tiles.getTileLocation(146, 78))
+let _6 = sprites.create(img`
+    . . f f f f f f f . . . 
+    . f f f f f f f f f . . 
+    . . f f f f f f f f f . 
+    . . . f f f f f f f f f 
+    . . . f f f f f f f f . 
+    . . . . . . f . . . . . 
+    . f f f f f f f f f f f 
+    . f . . . . f f . . . f 
+    . f . . . f f . . . . f 
+    . f . . . . f f . . . f 
+    . f . . . f f . . . . f 
+    . f . . . . f f . . . f 
+    . f . . . f f . . . . f 
+    . f . . . f . f . . . f 
+    . f . . f . . . f . . f 
+    `, SpriteKind.Enemy)
+tiles.placeOnTile(_6, tiles.getTileLocation(146, 78))
+let _7 = sprites.create(img`
+    . . f f f f f f f . . . 
+    . f f f f f f f f f . . 
+    . . f f f f f f f f f . 
+    . . . f f f f f f f f f 
+    . . . f f f f f f f f . 
+    . . . . . . f . . . . . 
+    . f f f f f f f f f f f 
+    . f . . . . f f . . . f 
+    . f . . . f f . . . . f 
+    . f . . . . f f . . . f 
+    . f . . . f f . . . . f 
+    . f . . . . f f . . . f 
+    . f . . . f f . . . . f 
+    . f . . . f . f . . . f 
+    . f . . f . . . f . . f 
+    `, SpriteKind.Enemy)
+tiles.placeOnTile(_7, tiles.getTileLocation(146, 78))
 _2pth = scene.aStar(_2.tilemapLocation(), mySprite.tilemapLocation())
 _3pth = scene.aStar(_3.tilemapLocation(), mySprite.tilemapLocation())
 _4pth = scene.aStar(_4.tilemapLocation(), mySprite.tilemapLocation())
@@ -138,9 +192,6 @@ _3.setFlag(SpriteFlag.GhostThroughWalls, true)
 _4.setFlag(SpriteFlag.GhostThroughWalls, true)
 game.setGameOverScoringType(game.ScoringType.LowScore)
 game.onUpdate(function () {
-	
-})
-forever(function () {
 	
 })
 forever(function () {
@@ -283,4 +334,12 @@ forever(function () {
     if (_2.tilemapLocation() == mySprite.tilemapLocation()) {
     	
     }
+})
+forever(function () {
+	
+})
+game.onUpdateInterval(500, function () {
+    tiles.placeOnRandomTile(_5, assets.tile`myTile1`)
+    tiles.placeOnRandomTile(_6, assets.tile`myTile1`)
+    tiles.placeOnRandomTile(_7, assets.tile`myTile1`)
 })
