@@ -14,6 +14,15 @@ function resfollow () {
     scene.followPath(_3, _3pth, 40)
     scene.followPath(_4, _4pth, 40)
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (Sensitivity == 5) {
+        Sensitivity = 1
+        Render.moveWithController(3, Sensitivity, 0)
+    } else {
+        Sensitivity += 1
+        Render.moveWithController(3, Sensitivity, 0)
+    }
+})
 controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     res()
     resfollow()
@@ -41,9 +50,12 @@ let _4: Sprite = null
 let _3: Sprite = null
 let _2: Sprite = null
 let mySprite: Sprite = null
+let Sensitivity = 0
 game.splash("THE BACKROOM")
 game.splash("ESCAPE")
+game.splash("Click B to adjust the sensitivity of the camera. Default is 3.")
 let VIEW = 0
+Sensitivity = 3
 scene.setBackgroundColor(1)
 Render.setViewMode(ViewMode.raycastingView)
 mySprite = sprites.create(img`
@@ -68,11 +80,11 @@ mySprite = Render.getRenderSpriteVariable()
 let list2 = [270, 90]
 let GHOST_SPEED = 30
 tiles.setCurrentTilemap(tilemap`level2`)
-Render.moveWithController(3, 3, 0)
+Render.moveWithController(3, Sensitivity, 0)
 tiles.placeOnTile(mySprite, tiles.getTileLocation(1, 49))
 tiles.placeOnTile(Render.getRenderSpriteInstance(), tiles.getTileLocation(1, 49))
 mySprite.follow(Render.getRenderSpriteInstance())
-Render.setViewAngleInDegree(270)
+Render.setViewAngleInDegree(list2._pickRandom())
 info.startCountup(false)
 _2 = sprites.create(img`
     f f f f f f f f f f f f f f f f 
@@ -113,7 +125,7 @@ _3 = sprites.create(img`
     . f . . f . . . f . . f . 
     . . . . f . . . f . . . . 
     `, SpriteKind.Enemy)
-tiles.placeOnTile(_3, tiles.getTileLocation(16, 38))
+tiles.placeOnTile(_3, tiles.getTileLocation(16, 58))
 _4 = sprites.create(img`
     . . . . f f f f . . . . 
     . . . f f f f f f . . . 
@@ -131,7 +143,7 @@ _4 = sprites.create(img`
     f f . f f . . f f . f f 
     f f . f f . . f f . f f 
     `, SpriteKind.Enemy)
-tiles.placeOnTile(_4, tiles.getTileLocation(16, 38))
+tiles.placeOnTile(_4, tiles.getTileLocation(32, 38))
 scene.followPath(_2, _2pth, 30)
 scene.followPath(_3, _3pth, 30)
 scene.followPath(_4, _4pth, 30)
